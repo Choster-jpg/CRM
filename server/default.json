@@ -1,0 +1,14 @@
+{
+  "server":
+  {
+    "port" : 5000
+  },
+  "database":
+  {
+    "DB_NAME" : "crm",
+    "DB_USER" : "postgres",
+    "DB_PASSWORD" : "Makar21062002",
+    "DB_HOST" : "localhost",
+    "DB_PORT" : 5432
+  }
+}
