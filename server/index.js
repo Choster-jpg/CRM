@@ -2,11 +2,16 @@ require('dotenv').config();
 
 const express = require('express');
 const config = require('./default');
-const sequelize = require('./databse/db')
+const sequelize = require('./databse/db');
+const cors = require('cors');
 
+const models = require('./models/models').Models(sequelize);
 const app = express();
 
 const PORT = process.env.PORT || config.server.port;
+
+app.use(cors());
+app.use(express.json());
 
 const start = async () =>
 {

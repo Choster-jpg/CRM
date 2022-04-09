@@ -9,6 +9,23 @@ class Product   extends Model {}
 
 let modelsSetUp = (sequelize) =>
 {
+    Carrier.init
+    (
+        {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+            city: { type: DataTypes.STRING, allowNull: false },
+            name: { type: DataTypes.STRING, allowNull: false },
+            is_busy: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+            is_deleted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
+        },
+        {
+            sequelize : sequelize,
+            modelName: "carrier",
+            tableName: "carriers",
+            timestamps: false
+        }
+    );
+
     User.init
     (
         {
@@ -23,6 +40,39 @@ let modelsSetUp = (sequelize) =>
             sequelize: sequelize,
             modelName: "user",
             tableName: "users",
+            timestamps: false
+        }
+    );
+
+    Supply.init
+    (
+        {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+            address: { type: DataTypes.STRING, allowNull: false },
+            date: { type: DataTypes.DATE, allowNull: false },
+            carrier_id: { type: DataTypes.INTEGER, references: {model: Carrier, key: "id"} }
+        },
+        {
+            sequelize : sequelize,
+            modelName: "supply",
+            tableName: "supplies",
+            timestamps: false
+        }
+    );
+
+    Product.init
+    (
+        {
+            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+            name: { type: DataTypes.STRING, allowNull: false, unique: true },
+            amount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+            price: { type: DataTypes.DECIMAL, allowNull: false },
+            is_deleted: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
+        },
+        {
+            sequelize : sequelize,
+            modelName: "product",
+            tableName: "products",
             timestamps: false
         }
     );
@@ -45,54 +95,6 @@ let modelsSetUp = (sequelize) =>
             timestamps: false
         }
     );
-
-    Supply.init
-    (
-        {
-            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-            address: { type: DataTypes.STRING, allowNull: false },
-            date: { type: DataTypes.DATE, allowNull: false },
-            carrier_id: { type: DataTypes.INTEGER, references: {model: Carrier, key: "id"} }
-        },
-        {
-            sequelize : sequelize,
-            modelName: "supply",
-            tableName: "supplies",
-            timestamps: false
-        }
-    );
-
-    Carrier.init
-    (
-        {
-            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-            city: { type: DataTypes.STRING, allowNull: false },
-            name: { type: DataTypes.STRING, allowNull: false },
-            is_busy: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
-        },
-        {
-            sequelize : sequelize,
-            modelName: "carrier",
-            tableName: "carriers",
-            timestamps: false
-        }
-    );
-
-    Product.init
-    (
-        {
-            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-            name: { type: DataTypes.STRING, allowNull: false, unique: true },
-            amount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-            price: { type: DataTypes.DECIMAL, allowNull: false }
-        },
-        {
-            sequelize : sequelize,
-            modelName: "product",
-            tableName: "products",
-            timestamps: false
-        }
-    )
 
     User.hasMany(Order, {as: 'user_orders', foreignKey: 'user_id', sourceKey: 'id'});
     Product.hasMany(Order, {as: 'product_orders', foreignKey: 'product_id', sourceKey: 'id'});
