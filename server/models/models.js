@@ -6,6 +6,7 @@ class Order     extends Model {}
 class Supply    extends Model {}
 class Carrier   extends Model {}
 class Product   extends Model {}
+class Token     extends Model {}
 
 let modelsSetUp = (sequelize) =>
 {
@@ -34,12 +35,28 @@ let modelsSetUp = (sequelize) =>
             password: { type: DataTypes.STRING, unique: true, allowNull: false },
             role: { type: DataTypes.STRING, defaultValue: "USER" },
             phone: { type: DataTypes.STRING, allowNull: true },
-            company: { type: DataTypes.STRING, allowNull: true }
+            company: { type: DataTypes.STRING, allowNull: true },
+            is_activated: { type: DataTypes.BOOLEAN, defaultValue: false },
+            activationLink: { type: DataTypes.STRING, allowNull: true }
         },
         {
             sequelize: sequelize,
             modelName: "user",
             tableName: "users",
+            timestamps: false
+        }
+    );
+
+    Token.init
+    (
+        {
+            user: { type: DataTypes.INTEGER, references: {model: User, key: "id"} },
+            refreshToken: { type: DataTypes.STRING, allowNull: false }
+        },
+        {
+            sequelize : sequelize,
+            modelName: "token",
+            tableName: "token",
             timestamps: false
         }
     );
@@ -97,11 +114,12 @@ let modelsSetUp = (sequelize) =>
     );
 
     User.hasMany(Order, {as: 'user_orders', foreignKey: 'user_id', sourceKey: 'id'});
+    User.hasMany(Token, {as: 'user_token', foreignKey: 'user', sourceKey: 'id'});
     Product.hasMany(Order, {as: 'product_orders', foreignKey: 'product_id', sourceKey: 'id'});
     Supply.hasMany(Order, {as: 'supply_orders', foreignKey: 'supply_id', sourceKey: 'id'});
     Carrier.hasMany(Supply, {as: 'carrier_supplies', foreignKey: 'carrier_id', sourceKey: 'id'});
 
-    return {User, Carrier, Supply, Order, Product}
+    return {User, Carrier, Supply, Order, Product, Token}
 }
 
 module.exports.Models = (sequelize) => modelsSetUp(sequelize);

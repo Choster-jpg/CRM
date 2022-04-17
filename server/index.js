@@ -5,13 +5,18 @@ const config = require('./default');
 const sequelize = require('./databse/db');
 const cors = require('cors');
 
+const router = require('./routes/index');
 const models = require('./models/models').Models(sequelize);
+const errorHandler = require('./middleware/ErrorHandlingMiddleware');
 const app = express();
 
 const PORT = process.env.PORT || config.server.port;
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', router);
+
+app.use(errorHandler);
 
 const start = async () =>
 {
