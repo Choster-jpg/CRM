@@ -5,6 +5,7 @@
     "api_url": "http://localhost:5000",
     "client_url": "http://localhost:5000/api/user/getUsers"
   },
+
   "database":
   {
     "DB_NAME": "crm",
@@ -13,16 +14,27 @@
     "DB_HOST": "localhost",
     "DB_PORT": 5432
   },
+
   "jwt":
   {
     "access_secret": "choster-jpg",
     "refresh_secret": "choster-refresh-jpg"
   },
+
   "smtp":
   {
     "smtp_port": 587,
     "smtp_host": "smtp.gmail.com",
     "smtp_user": "crmapplication2rock@gmail.com",
     "smtp_password": "Makar21062002"
+  },
+  
+  "auth":
+  {
+    "google":
+    {
+      "google_client_id": "639233511845-2jpn0o7siocng47494459vgh073ho70i.apps.googleusercontent.com",
+      "google_client_secret": "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"
+    }
   }
 }
