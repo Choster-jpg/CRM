@@ -37,7 +37,8 @@ let modelsSetUp = (sequelize) =>
             phone: { type: DataTypes.STRING, allowNull: true },
             company: { type: DataTypes.STRING, allowNull: true },
             is_activated: { type: DataTypes.BOOLEAN, defaultValue: false },
-            activationLink: { type: DataTypes.STRING, allowNull: true }
+            activationLink: { type: DataTypes.STRING, allowNull: true },
+            resetLink: { type: DataTypes.STRING, allowNull: true }
         },
         {
             sequelize: sequelize,
