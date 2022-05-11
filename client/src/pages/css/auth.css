@@ -1,0 +1,149 @@
+.form-white-container{
+    background-color: white;
+    height: 100%;
+    width: 20%;
+    padding-left: 50px;
+    padding-right: 30px;
+    padding-top: 60px;
+}
+
+.green-background{
+    background-image: url("../static/background.jpg");
+    height: 100%;
+    width: 100%;
+}
+
+.form-elements-container{
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.image-div-logo{
+    background-image: url("../static/crm_color_80x80.png");
+    background-repeat: no-repeat;
+    height: 80px;
+    width: 80px;
+}
+
+.img-label-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.logo-label{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28pt;
+    color: #00684a;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.log-in-label-container{
+    margin-top: 60px;
+}
+
+.log-in-label{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30pt;
+    color: #00684a;
+}
+
+.button-google-label{
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    margin-left: 10px;
+}
+
+.button-google{
+    width: 270px;
+    margin-top: 30px;
+}
+
+.fa-google{
+    color: white;
+}
+
+.divider-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.divider-label{
+    color: #595858;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.rounded {
+    border-top: 3px solid #737272;
+    border-radius: 5px;
+    width: 116px;
+}
+
+.exact-form-container{
+    margin-top: 30px;
+    margin-right: 8%;
+    background-color: transparent;
+    height: 40%;
+}
+
+.form-label{
+    color: #595858;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 12pt;
+    margin-bottom: 0px;
+}
+
+.button-submit{
+    border-radius: 8px;
+    width: 40%;
+}
+
+.button-submit-label{
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.row-submit-reg{
+    margin-left: 0%;
+    padding-left: 0px;
+}
+
+.no-account-label{
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 12pt;
+    color: #595858;
+    font-weight: bold;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.link-label{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 12pt;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.forgot-password-label{
+    margin-left: 0px;
+}
+
+.form-control{
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: #ababab;
+}
+
+.button-submit-reset{
+    border-radius: 8px;
+    width: 60%;
+}
