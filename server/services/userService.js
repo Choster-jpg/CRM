@@ -11,7 +11,7 @@ const ApiError = require('../error/ApiError')
 
 class UserService
 {
-    async register(email, password)
+    async register(email, password, name, lastName, phone, company)
     {
         let candidate = await User.findOne({ where: {email: email}});
 
@@ -25,7 +25,7 @@ class UserService
 
         let completeActivationLink = `${config.server.api_url}/api/user/activate/${activationLink}`;
 
-        let user = await User.create({email: email, password: hashPassword, activationLink: activationLink});
+        let user = await User.create({email: email, password: hashPassword, activationLink: activationLink, name: name, last_name: lastName, phone: phone, company: company});
         await mailService.sendActivationMail(email, completeActivationLink);
 
         let userDto = new UserDto(user);
@@ -67,6 +67,7 @@ class UserService
         }
 
         const userDto = new UserDto(user);
+        console.log("user dto: ", userDto);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
@@ -137,10 +138,8 @@ class UserService
         let user = await User.update({password: hashPassword}, {where: {email: email}});
 
         let userDto = new UserDto(user);
-        let tokens = tokenService.generateTokens({...userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        return { ...tokens, user: userDto };
+        return { user: userDto };
     }
 }
 

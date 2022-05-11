@@ -7,6 +7,11 @@ module.exports = function(isRoleCheckNecessary)
     {
         try
         {
+            if(req.isAuthenticated())
+            {
+                return next();
+            }
+
             const authorizationHeader = req.headers.authorization;
             if(!authorizationHeader)
             {

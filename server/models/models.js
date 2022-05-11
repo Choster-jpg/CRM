@@ -1,15 +1,31 @@
 const sequelize = require('../databse/db');
 const {DataTypes, Model} = require('sequelize');
 
-class User      extends Model {}
-class Order     extends Model {}
-class Supply    extends Model {}
-class Carrier   extends Model {}
-class Product   extends Model {}
-class Token     extends Model {}
+class User          extends Model {}
+class Order         extends Model {}
+class Supply        extends Model {}
+class Carrier       extends Model {}
+class Product       extends Model {}
+class Token         extends Model {}
+class UserSessions  extends Model {}
 
 let modelsSetUp = (sequelize) =>
 {
+    UserSessions.init
+    (
+        {
+            _id: { type: DataTypes.STRING, primaryKey: true, unique: true },
+            expire: { type: DataTypes.DATE },
+            session: { type: DataTypes.STRING }
+        },
+        {
+            sequelize : sequelize,
+            modelName: "UserSessions",
+            tableName: "user_sessions",
+            timestamps: false
+        }
+    );
+
     Carrier.init
     (
         {
@@ -32,7 +48,11 @@ let modelsSetUp = (sequelize) =>
         {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
             email: { type: DataTypes.STRING, unique: true, allowNull: false },
-            password: { type: DataTypes.STRING, unique: true, allowNull: false },
+            password: { type: DataTypes.STRING, unique: true, allowNull: true },
+            name: { type: DataTypes.STRING, allowNull: false },
+            last_name: { type: DataTypes.STRING, allowNull: false },
+            display_name: { type: DataTypes.STRING, allowNull: true },
+            image: { type: DataTypes.STRING(1000), allowNull: true },
             role: { type: DataTypes.STRING, defaultValue: "USER" },
             phone: { type: DataTypes.STRING, allowNull: true },
             company: { type: DataTypes.STRING, allowNull: true },
@@ -52,7 +72,7 @@ let modelsSetUp = (sequelize) =>
     (
         {
             user: { type: DataTypes.INTEGER, references: {model: User, key: "id"} },
-            refreshToken: { type: DataTypes.STRING, allowNull: false }
+            refreshToken: { type: DataTypes.STRING(1000), allowNull: false }
         },
         {
             sequelize : sequelize,
@@ -66,7 +86,8 @@ let modelsSetUp = (sequelize) =>
     (
         {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-            address: { type: DataTypes.STRING, allowNull: false },
+            address_from: { type: DataTypes.STRING, allowNull: false },
+            address_to: { type: DataTypes.STRING, allowNull: false },
             date: { type: DataTypes.DATE, allowNull: false },
             carrier_id: { type: DataTypes.INTEGER, references: {model: Carrier, key: "id"} }
         },
@@ -114,11 +135,11 @@ let modelsSetUp = (sequelize) =>
         }
     );
 
-    User.hasMany(Order, {as: 'user_orders', foreignKey: 'user_id', sourceKey: 'id'});
-    User.hasMany(Token, {as: 'user_token', foreignKey: 'user', sourceKey: 'id'});
-    Product.hasMany(Order, {as: 'product_orders', foreignKey: 'product_id', sourceKey: 'id'});
-    Supply.hasMany(Order, {as: 'supply_orders', foreignKey: 'supply_id', sourceKey: 'id'});
-    Carrier.hasMany(Supply, {as: 'carrier_supplies', foreignKey: 'carrier_id', sourceKey: 'id'});
+    User.hasMany(Order, {as: 'user_orders', foreignKey: 'user_id', sourceKey: 'id', onDelete: "cascade"});
+    User.hasMany(Token, {as: 'user_token', foreignKey: 'user', sourceKey: 'id', onDelete: "cascade"});
+    Product.hasMany(Order, {as: 'product_orders', foreignKey: 'product_id', sourceKey: 'id', onDelete: "cascade"});
+    Supply.hasMany(Order, {as: 'supply_orders', foreignKey: 'supply_id', sourceKey: 'id', onDelete: "cascade"});
+    Carrier.hasMany(Supply, {as: 'carrier_supplies', foreignKey: 'carrier_id', sourceKey: 'id', onDelete: "cascade"});
 
     return {User, Carrier, Supply, Order, Product, Token}
 }

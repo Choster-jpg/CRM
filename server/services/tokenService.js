@@ -11,6 +11,7 @@ class TokenService
         const accessToken = jwt.sign(payload, config.jwt.access_secret, {expiresIn: '30m'});
         const refreshToken = jwt.sign(payload, config.jwt.refresh_secret, {expiresIn: '30d'});
 
+        console.log(accessToken, refreshToken)
         return {accessToken, refreshToken }
     }
 
@@ -43,6 +44,7 @@ class TokenService
     async saveToken(userId, refreshToken)
     {
         let tokenData = await Token.findOne({user: userId});
+        console.log(refreshToken)
         if(tokenData)
         {
             tokenData.refreshToken = refreshToken;

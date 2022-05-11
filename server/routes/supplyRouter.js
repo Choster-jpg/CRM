@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', );
-router.post('/', );
+const supplyController = require('../controllers/supplyController');
+
+router.get('/', supplyController.getAll);
+router.post('/', supplyController.create);
 
 module.exports = router;

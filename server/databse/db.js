@@ -11,4 +11,4 @@ module.exports = new Sequelize
         host: config.database.DB_HOST,
         port: config.database.DB_PORT
     }
-)
+);

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const carrierController = require('../controllers/carrierController');
 
-router.post('/', );
-router.get('/', );
-router.delete('/:id', );
+router.post('/', carrierController.create);
+router.get('/', carrierController.getAll);
+router.delete('/', carrierController.remove);
 
 module.exports = router;
