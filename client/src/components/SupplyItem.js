@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Card, Col} from "react-bootstrap";
-import StatusBox from "./StatusBox";
 import {ArrowRightCircle, FileExcelFill} from "react-bootstrap-icons";
 import {observer} from "mobx-react-lite";
 
@@ -22,7 +21,7 @@ const SupplyItem = observer( ({supply}) =>
                             <Card.Title style={{marginLeft: 30}}>{supply.address_to}</Card.Title>
                         </div>
                         <div style={{background:"transparent", width:200, paddingLeft: 30, marginTop: 2}}>
-                            <Card.Title style={{marginLeft: 30}}>{supply.date}</Card.Title>
+                            <Card.Title style={{marginLeft: 30}}>{supply.date.substring(0,10)}</Card.Title>
                         </div>
                         <div style={{background:"transparent", width:200, paddingLeft: 30, marginTop: 2}}>
                             <Card.Text style={{marginLeft: 30, fontSize: 16, fontWeight: "bold"}}>Перевозчик #{supply.carrier_id}</Card.Text>

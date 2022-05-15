@@ -1,12 +1,21 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import OrderItem from "./OrderItem";
+import {fetchSupply} from "../http/supplyAPI";
+import {fetchOrders} from "../http/orderAPI";
 
 const Order = observer(() =>
 {
-    const {order} = useContext(Context);
+    const {orders} = useContext(Context);
+    const {supply} = useContext(Context);
+
+    useEffect(()=> {
+        fetchSupply().then(data => supply.setSupplies(data.rows));
+        fetchOrders().then(data => orders.setOrders(data.rows));
+    }, [])
+
 
     return (
         <Card className="div-main-content-container">
@@ -29,7 +38,7 @@ const Order = observer(() =>
 
             <Row className="d-flex">
                 {
-                    order.orders.map(order =>
+                    orders.orders.map(order =>
                         <OrderItem key={order.id} order={order}/>
                     )
                 }

@@ -17,7 +17,7 @@ root.render
             user: new UserStore(),
             product: new ProductStore(),
             carrier: new CarrierStore(),
-            order: new OrderStore(),
+            orders: new OrderStore(),
             supply: new SupplyStore()
         }
     }>

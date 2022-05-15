@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Form, FormGroup, InputGroup, Modal} from "react-bootstrap";
-import {createProduct} from "../../http/productAPI";
 import {CARRIER_ROUTE, PRODUCT_ROUTE} from "../../utils/consts";
 import {useNavigate} from "react-router-dom";
+import {createCarrier} from "../../http/carrierAPI";
 
 const AddCarrier = ({show, onHide}) =>
 {
@@ -11,7 +11,7 @@ const AddCarrier = ({show, onHide}) =>
     const [validated, setValidated] = useState(false);
 
     const [name, setName] = useState('');
-    const [city, setCity] = useState('');
+    const [city, setCity] = useState('Гродно');
 
     const handleSubmit = (event) =>
     {
@@ -26,7 +26,7 @@ const AddCarrier = ({show, onHide}) =>
 
     const addCarrier = () =>
     {
-        createProduct({city: city, name: name}).then(() =>
+        createCarrier({city: city, name: name}).then(() =>
         {
             onHide();
             navigate(CARRIER_ROUTE);

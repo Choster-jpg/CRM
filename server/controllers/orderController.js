@@ -1,5 +1,5 @@
 const sequelize = require('../databse/db');
-const {Order} = require('../models/models').Models(sequelize);
+const {Order, Supply} = require('../models/models').Models(sequelize);
 
 class orderController
 {
@@ -7,9 +7,9 @@ class orderController
     {
         try
         {
-            const {user_id, product_id, supply_id, amount} = request.body;
-            const order = await Order.create({user_id, product_id, supply_id, amount});
+            const {user_id, product_id, amount} = request.body;
 
+            const order = await Order.create({user_id, product_id, supply_id: null, amount});
             return response.json(order);
         }
         catch(e)
@@ -43,7 +43,9 @@ class orderController
         try
         {
             const id = request.params.id;
-            const order = await Order.update({is_in_process: true}, {where: {id: id}});
+            const supply_id = request.body.id;
+
+            const order = await Order.update({is_in_process: true, supply_id: supply_id}, {where: {id: id}});
             return response.json(order);
         }
         catch(e)

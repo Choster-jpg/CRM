@@ -1,8 +1,8 @@
 import {$authHost} from "./index";
 
-export const createCarrier = async (product) =>
+export const createCarrier = async (carrier) =>
 {
-    const {data} = await $authHost.post('api/carrier', {data});
+    const {data} = await $authHost.post('api/carrier', {name: carrier.name, city: carrier.city});
     return data;
 }
 

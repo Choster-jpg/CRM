@@ -1,9 +1,9 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import ProductItem from "./ProductItem";
-import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
-import {fetchProducts} from "../http/productAPI";
+import {Card, Col, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
+import {fetchProducts, removeProduct} from "../http/productAPI";
 
 
 const Products = observer (() =>
@@ -71,7 +71,9 @@ const Products = observer (() =>
             <Row className="d-flex">
                 {
                     product.products.map(product =>
-                        <ProductItem key={product.id} product={product}/>
+                        <ProductItem key={product.id}
+                                     product={product}
+                                     removeItem={() => removeProduct(product.id)}/>
                     )
                 }
             </Row>

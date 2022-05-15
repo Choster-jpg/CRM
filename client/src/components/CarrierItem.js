@@ -5,7 +5,7 @@ import {ArrowDownUp, CartPlusFill, DashCircleFill, EnvelopeX, TrashFill} from "r
 import {observer} from "mobx-react-lite";
 import StatusBox from "./StatusBox";
 
-const CarrierItem = observer(({carrier}) =>
+const CarrierItem = observer(({carrier, removeItem}) =>
 {
     return (
         <Col md={12}>
@@ -23,7 +23,8 @@ const CarrierItem = observer(({carrier}) =>
                             <StatusBox status={carrier.is_busy}/>
                         </div>
                         <div style={{width: 320}}>
-                            <Button variant="outline-danger" style={{width: 200, height: 50, marginLeft: 80}}><EnvelopeX size={30}/></Button>
+                            <Button variant="outline-danger" style={{width: 200, height: 50, marginLeft: 80}}
+                                    onClick={() => removeItem()}><EnvelopeX size={30}/></Button>
                         </div>
                     </div>
                 </Card.Body>

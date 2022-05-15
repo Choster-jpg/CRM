@@ -2,7 +2,8 @@ import {$authHost} from "./index";
 
 export const createProduct = async (product) =>
 {
-    const {data} = await $authHost.post('api/product', {data});
+    console.log(product);
+    const {data} = await $authHost.post('api/product', {name: product.name, amount: product.amount, price: product.price});
     return data;
 }
 
@@ -18,8 +19,14 @@ export const removeProduct = async (id) =>
     return data;
 }
 
-export const incrementProduct = async (id) =>
+export const incrementProduct = async (id, amount) =>
 {
-    const {data} = await $authHost.put('api/product', {id});
+    const {data} = await $authHost.put(`api/product/${amount}`, {id});
+    return data;
+}
+
+export const  updateProduct = async (id, value) =>
+{
+    const {data} = await $authHost.put(`api/product/price/${value}`, {id});
     return data;
 }

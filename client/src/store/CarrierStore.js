@@ -6,28 +6,28 @@ export default class CarrierStore
         return this._limit;
     }
 
-    set limit(value) {
+    setLimit(value) {
         this._limit = value;
     }
     get totalCount() {
         return this._totalCount;
     }
 
-    set totalCount(value) {
+    setTotalCount(value) {
         this._totalCount = value;
     }
     get page() {
         return this._page;
     }
 
-    set page(value) {
+    setPage(value) {
         this._page = value;
     }
     get carriers() {
         return this._carriers;
     }
 
-    set carriers(value) {
+    setCarriers(value) {
         this._carriers = value;
     }
 
@@ -35,10 +35,10 @@ export default class CarrierStore
     {
         this._carriers =
             [
-                {id: 1, name: "ГродноОблТранс", city: "Гродно", is_busy: false},
+                /*{id: 1, name: "ГродноОблТранс", city: "Гродно", is_busy: false},
                 {id: 2, name: "МинскСоюзОблТранс", city: "Минск", is_busy: true},
                 {id: 3, name: "Областной перевозчик города Брест", city: "Брест", is_busy: true},
-                {id: 4, name: "ВитебскГосТранс", city: "Витебск", is_busy: false}
+                {id: 4, name: "ВитебскГосТранс", city: "Витебск", is_busy: false}*/
             ];
 
         this._page = 1;

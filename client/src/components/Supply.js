@@ -1,21 +1,30 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import SupplyItem from "./SupplyItem";
 import DatePicker from "react-datepicker";
 import OrderConfirmItem from "./OrderConfirmItem";
+import {fetchSupply} from "../http/supplyAPI";
+import {fetchOrders} from "../http/orderAPI";
 
 const Supply = observer(() =>
 {
     const {supply} = useContext(Context);
-    const {order} = useContext(Context);
+    const {orders} = useContext(Context);
+
+    useEffect(()=> {
+        fetchSupply().then(data => supply.setSupplies(data.rows));
+        fetchOrders().then(data => orders.setOrders(data.rows));
+    }, [])
 
     const [addressFrom, setAddressFrom] = useState('');
     const [addressTo, setAddressTo] = useState('');
     const [date, setDate] = useState('');
 
     const today = new Date();
+
+    let unconfirmed_orders = orders.orders.filter(order => order.is_in_process == false);
 
     return (
         <div className="d-flex flex-row">
@@ -30,7 +39,7 @@ const Supply = observer(() =>
 
                 <Row className="d-flex" style={{marginTop: 55}}>
                     {
-                        order.orders.map(order =>
+                        unconfirmed_orders.map(order =>
                             <OrderConfirmItem key={order.id} order={order}/>
                         )
                     }

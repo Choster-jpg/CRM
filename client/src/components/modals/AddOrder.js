@@ -44,7 +44,7 @@ const AddOrder = ({show, onHide}) =>
                             <Form.Select required type="text" className="form-control" value={productName} onChange={(e) => setProductName(e.target.value)}>
                                 {
                                     product.products.map(product =>
-                                        <option>{product.name}</option>
+                                        <option key={product.id}>{product.name}</option>
                                     )
                                 }
                             </Form.Select>

@@ -6,28 +6,31 @@ export default class OrderStore
         return this._limit_cf;
     }
 
-    set limit_cf(value) {
+    setLimit_cf(value) {
         this._limit_cf = value;
     }
+
     get totalCount_cf() {
         return this._totalCount_cf;
     }
 
-    set totalCount_cf(value) {
+    setTotalCount_cf(value) {
         this._totalCount_cf = value;
     }
+
     get page_cf() {
         return this._page_cf;
     }
 
-    set page_cf(value) {
+    setPage_cf(value) {
         this._page_cf = value;
     }
+
     get limit() {
         return this._limit;
     }
 
-    set limit(value) {
+    setLimit(value) {
         this._limit = value;
     }
 
@@ -35,7 +38,7 @@ export default class OrderStore
         return this._totalCount;
     }
 
-    set totalCount(value) {
+    setTotalCount(value) {
         this._totalCount = value;
     }
 
@@ -43,7 +46,7 @@ export default class OrderStore
         return this._page;
     }
 
-    set page(value) {
+    setPage(value) {
         this._page = value;
     }
 
@@ -51,7 +54,7 @@ export default class OrderStore
         return this._orders;
     }
 
-    set orders(value) {
+    setOrders(value) {
         this._orders = value;
     }
 
@@ -59,10 +62,10 @@ export default class OrderStore
     {
         this._orders =
             [
-                {id: 1, user_id: 1, product_id: 1, supply_id: 1, amount: 10235, is_in_process: false},
-                {id: 2, user_id: 1, product_id: 2, supply_id: null, amount: 5, is_in_process: false},
-                {id: 3, user_id: 1, product_id: 3, supply_id: 3, amount: 10, is_in_process: true},
-                {id: 4, user_id: 1, product_id: 4, supply_id: 4, amount: 15, is_in_process: false},
+                {id: 1, user_id: 1, product_id: 8, supply_id: 11, amount: 10235, is_in_process: false},
+                {id: 2, user_id: 1, product_id: 11, supply_id: null, amount: 5, is_in_process: false},
+                {id: 3, user_id: 1, product_id: 9, supply_id: 11, amount: 10, is_in_process: false},
+                {id: 4, user_id: 1, product_id: 10, supply_id: 11, amount: 15, is_in_process: false},
             ];
 
         this._page = 1;

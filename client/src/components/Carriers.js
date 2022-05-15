@@ -1,12 +1,17 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import CarrierItem from "./CarrierItem";
+import {fetchCarrier, removeCarrier} from "../http/carrierAPI";
 
 const Carriers = observer(() =>
 {
     const {carrier} = useContext(Context);
+
+    useEffect(() => {
+        fetchCarrier().then(data => carrier.setCarriers(data.rows))
+    }, [])
 
     return (
         <Card className="div-main-content-container">
@@ -26,7 +31,8 @@ const Carriers = observer(() =>
             <Row className="d-flex">
                 {
                     carrier.carriers.map(carrier =>
-                        <CarrierItem key={carrier.id} carrier={carrier}/>
+                        <CarrierItem key={carrier.id} carrier={carrier}
+                                     removeItem={() => removeCarrier(carrier.id)}/>
                     )
                 }
             </Row>

@@ -27,7 +27,7 @@ class carrierController
             limit = limit || 10;
             let offset = page * limit - limit;
 
-            const carriers = await Carrier.findAndCountAll({limit, offset});
+            const carriers = await Carrier.findAndCountAll({limit, offset,  where: {is_deleted : false}});
             return response.json(carriers);
         }
         catch (e)

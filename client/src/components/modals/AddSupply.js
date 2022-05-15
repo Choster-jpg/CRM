@@ -1,21 +1,29 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {Context} from "../../index";
 import {Button, Form, FormGroup, InputGroup, Modal} from "react-bootstrap";
-import ProductItem from "../ProductItem";
-
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import {fetchCarrier} from "../../http/carrierAPI";
+import {createSupply} from "../../http/supplyAPI";
+import {useNavigate} from "react-router-dom";
+import {SUPPLY_ROUTE} from "../../utils/consts";
 
 const AddSupply = ({show, onHide}) =>
 {
+    const navigate = useNavigate();
+
     const {carrier} = useContext(Context);
+
+    useEffect(() => {
+        fetchCarrier().then(data => carrier.setCarriers(data.rows))
+    }, []);
 
     const [validated, setValidated] = useState(false);
 
     const [addressFrom, setAddressFrom] = useState('');
     const [addressTo, setAddressTo] = useState('');
-    const [date, setDate] = useState('');
-    const [carr, setCarr] = useState('');
+    const [date, setDate] = useState("");
+    const [carr, setCarr] = useState("");
 
     const handleSubmit = (event) =>
     {
@@ -27,6 +35,14 @@ const AddSupply = ({show, onHide}) =>
 
         setValidated(true);
     };
+
+    const onClick = () =>
+    {
+        const carrier_id = carrier.carriers.filter(carrier => carrier.name == carr)[0].id;
+        createSupply({address_from: addressFrom, address_to: addressTo, date: date, carrier_id: carrier_id}).then(data => console.log(data));
+        onHide();
+        navigate(SUPPLY_ROUTE);
+    }
 
     const today = new Date();
 
@@ -75,7 +91,7 @@ const AddSupply = ({show, onHide}) =>
                             <Form.Select required type="text" className="form-control" value={carr} onChange={(e) => setCarr(e.target.value)}>
                                 {
                                     carrier.carriers.map(carrier =>
-                                        <option>{carrier.name}</option>
+                                        <option key={carrier.id}>{carrier.name}</option>
                                     )
                                 }
                             </Form.Select>
@@ -83,7 +99,7 @@ const AddSupply = ({show, onHide}) =>
                     </Form.Group>
                     <hr style={{marginTop: 30}}/>
                     <FormGroup>
-                        <Button variant="outline-success" type="submit">
+                        <Button variant="outline-success" onClick={onClick}>
                             Назначить
                         </Button>
                     </FormGroup>

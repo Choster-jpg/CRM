@@ -1,12 +1,28 @@
-import React from 'react';
-import {Button, Card, Col, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
-import CardHeader from "react-bootstrap/CardHeader";
-import {ArrowDownUp, CartPlusFill, DashCircleFill, EnvelopeX, FileExcelFill, TrashFill} from "react-bootstrap-icons";
-import {observer} from "mobx-react-lite";
+import React, {useContext, useEffect} from 'react';
+import {Button, Card, Col} from "react-bootstrap";
+import {FileExcelFill} from "react-bootstrap-icons";
 import StatusBox from "./StatusBox";
+import {Context} from "../index";
+import {fetchProducts} from "../http/productAPI";
+import {fetchSupply} from "../http/supplyAPI";
 
 const OrderItem = ({order}) =>
 {
+    const {product} = useContext(Context);
+    const {user} = useContext(Context);
+    const {supply} = useContext(Context);
+
+    useEffect(() => {
+        fetchProducts().then(data => {console.log(data);product.setProducts(data.rows)});
+        fetchSupply().then(data => supply.setSupplies(data.rows));
+    }, [])
+
+    const product_name = product.products.filter(product => product.id == order.product_id);
+
+    const tmp_user = user.users.filter(user => user.id == order.user_id)[0];
+    const display_name = tmp_user.name + ' ' + tmp_user.last_name;
+    const supply_date = supply.supplies.filter(supply => supply.id == order.supply_id)[0].date;
+
     return (
         <Col md={12}>
             <Card style={{marginLeft: 20, marginRight: 20, marginTop: 40, borderRadius: 10}} className="product-card">
@@ -14,12 +30,12 @@ const OrderItem = ({order}) =>
                 <Card.Body>
                     <div className="d-flex">
                         <div style={{background: "transparent", width: 340}} className="d-flex">
-                            <div className="order-user-avatar" style={{background: "green"}}></div>
-                            <Card.Title style={{marginLeft: 20, marginTop: 13}}>Марта Иванова</Card.Title>
+                            <div className="order-user-avatar" style={{background: "green"}}/>
+                            <Card.Title style={{marginLeft: 20, marginTop: 13}}>{display_name}</Card.Title>
                         </div>
                         <div style={{background: "transparent", width: 460}}>
                             <Card.Text style={{marginLeft: 20, marginTop: 13, fontSize: 16, fontWeight: "bold"}}>
-                                Шлакоблок Солидный ШБ250
+                                {product_name}
                             </Card.Text>
                         </div>
                         <div style={{background: "transparent", width: 90}} className="d-flex justify-content-center">
@@ -27,7 +43,7 @@ const OrderItem = ({order}) =>
                         </div>
                         <div style={{background: "transparent", width: 300}} className="d-flex justify-content-center">
                             <Card.Text className="span-carrier-city" style={{marginLeft: 20, marginTop: 13}}>
-                                {order.is_in_process ? "21.06.2022" : "--"}
+                                {order.is_in_process ? {supply_date} : "--"}
                             </Card.Text>
                         </div>
                         <div style={{background: "transparent", width: 150, paddingLeft: 50, paddingTop: 15}}>

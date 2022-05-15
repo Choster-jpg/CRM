@@ -35,7 +35,7 @@ const AddProduct = ({show, onHide}) =>
 
     const addProduct = () =>
     {
-        createProduct({name: name, amount: 0, price: price}).then(() =>
+        createProduct({name: name, amount: 0, price: +price}).then(() =>
         {
             onHide();
             navigate(PRODUCT_ROUTE);
@@ -70,7 +70,7 @@ const AddProduct = ({show, onHide}) =>
                     </Form.Group>
                     <hr style={{marginTop: 30}}/>
                     <FormGroup>
-                        <Button variant="outline-success" type="submit" onClick={addProduct}>
+                        <Button variant="outline-success" onClick={addProduct}>
                             Добавить
                         </Button>
                     </FormGroup>

@@ -152,10 +152,29 @@ class productController
         try
         {
             const id = request.body.id;
+            const amount = +request.params.id;
+
             console.log(id);
             const previous = await Product.findByPk(id);
 
-            const product = await Product.update({amount: previous.amount + 1}, {where: {id: id}});
+            const product = await Product.update({amount: amount == 1 ? previous.amount + amount : amount}, {where: {id: id}});
+            return response.json(product);
+        }
+        catch(e)
+        {
+            console.log(e);
+            return next(e);
+        }
+    }
+
+    async updatePrice(request, response, next)
+    {
+        try
+        {
+            const id = request.body.id;
+            const price = +request.params.value;
+
+            const product = await Product.update({price: price}, {where: {id: id}});
             return response.json(product);
         }
         catch(e)
