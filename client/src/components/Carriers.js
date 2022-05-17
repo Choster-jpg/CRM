@@ -4,14 +4,25 @@ import {Context} from "../index";
 import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import CarrierItem from "./CarrierItem";
 import {fetchCarrier, removeCarrier} from "../http/carrierAPI";
+import PaginationCarrier from "./PaginationCarrier";
 
 const Carriers = observer(() =>
 {
     const {carrier} = useContext(Context);
 
     useEffect(() => {
-        fetchCarrier().then(data => carrier.setCarriers(data.rows))
+        fetchCarrier(carrier.limit, carrier.page).then(data => {
+            carrier.setCarriers(data.rows);
+            carrier.setTotalCount(data.count);
+        })
     }, [])
+
+    useEffect(() => {
+        fetchCarrier(carrier.limit, carrier.page).then(data => {
+            carrier.setCarriers(data.rows);
+            carrier.setTotalCount(data.count);
+        })
+    },[carrier.page])
 
     return (
         <Card className="div-main-content-container">
@@ -36,6 +47,10 @@ const Carriers = observer(() =>
                     )
                 }
             </Row>
+
+            <div style={{marginLeft: 1440, marginTop:750, position: "absolute"}}>
+                <PaginationCarrier/>
+            </div>
         </Card>
     );
 });

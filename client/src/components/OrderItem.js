@@ -1,28 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {Button, Card, Col} from "react-bootstrap";
 import {FileExcelFill} from "react-bootstrap-icons";
 import StatusBox from "./StatusBox";
-import {Context} from "../index";
-import {fetchProducts} from "../http/productAPI";
-import {fetchSupply} from "../http/supplyAPI";
 
-const OrderItem = ({order}) =>
+const OrderItem = ({order, display_name, product_name, supply_date}) =>
 {
-    const {product} = useContext(Context);
-    const {user} = useContext(Context);
-    const {supply} = useContext(Context);
-
-    useEffect(() => {
-        fetchProducts().then(data => {console.log(data);product.setProducts(data.rows)});
-        fetchSupply().then(data => supply.setSupplies(data.rows));
-    }, [])
-
-    const product_name = product.products.filter(product => product.id == order.product_id);
-
-    const tmp_user = user.users.filter(user => user.id == order.user_id)[0];
-    const display_name = tmp_user.name + ' ' + tmp_user.last_name;
-    const supply_date = supply.supplies.filter(supply => supply.id == order.supply_id)[0].date;
-
     return (
         <Col md={12}>
             <Card style={{marginLeft: 20, marginRight: 20, marginTop: 40, borderRadius: 10}} className="product-card">

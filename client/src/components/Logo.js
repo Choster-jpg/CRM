@@ -7,7 +7,7 @@ const Logo = () =>
     return (
         <div className="img-label-container">
             <div className="image-div-logo"></div>
-            <span className="logo-label">2Rock</span>
+            <span className="logo-label">MDSW</span>
         </div>
     );
 };

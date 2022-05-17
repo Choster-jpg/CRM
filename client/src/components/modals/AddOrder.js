@@ -30,6 +30,11 @@ const AddOrder = ({show, onHide}) =>
         }
     };
 
+    const OnClick = () =>
+    {
+
+    }
+
 
     return (
         <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered backdrop="static" show={show} onHide={onHide}>
@@ -57,6 +62,19 @@ const AddOrder = ({show, onHide}) =>
                             <InputGroup.Text>шт.</InputGroup.Text>
                         </InputGroup>
                     </FormGroup>
+                    <Form.Group className="mb-3" style={{marginTop: 25}}>
+                        <Form.Label className="form-label">Место назначения </Form.Label>
+                        <InputGroup style={{width: 200}}>
+                            <Form.Select required type="text" className="form-control" >
+                                <option>Гродно</option>
+                                <option>Минск</option>
+                                <option>Брест</option>
+                                <option>Могилёв</option>
+                                <option>Гомель</option>
+                                <option>Витебск</option>
+                            </Form.Select>
+                        </InputGroup>
+                    </Form.Group>
                     <hr style={{marginTop: 30}}/>
                     <FormGroup>
                         <Button variant="outline-success" type="submit">

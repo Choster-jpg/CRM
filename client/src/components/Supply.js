@@ -3,10 +3,10 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Card, Col, Container, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import SupplyItem from "./SupplyItem";
-import DatePicker from "react-datepicker";
 import OrderConfirmItem from "./OrderConfirmItem";
 import {fetchSupply} from "../http/supplyAPI";
 import {fetchOrders} from "../http/orderAPI";
+import PaginationSupply from "./PaginationSupply";
 
 const Supply = observer(() =>
 {
@@ -18,11 +18,17 @@ const Supply = observer(() =>
         fetchOrders().then(data => orders.setOrders(data.rows));
     }, [])
 
-    const [addressFrom, setAddressFrom] = useState('');
-    const [addressTo, setAddressTo] = useState('');
-    const [date, setDate] = useState('');
+    const [addressFrom, setAddressFrom] = useState(null);
+    const [addressTo, setAddressTo] = useState(null);
+    const [date, setDate] = useState(null);
 
-    const today = new Date();
+    useEffect(() => {
+        fetchSupply(addressFrom, addressTo, date, supply.limit, supply.page).then(data =>
+        {
+            supply.setSupplies(data.rows);
+            supply.setTotalCount(data.count);
+        });
+    }, [addressFrom, addressTo, date, supply.page]);
 
     let unconfirmed_orders = orders.orders.filter(order => order.is_in_process == false);
 
@@ -54,7 +60,16 @@ const Supply = observer(() =>
                             <FormGroup as={Col} className="col-4">
                                 <Form.Label column className="form-label">Откуда</Form.Label>
                                 <InputGroup style={{width: 170}}>
-                                    <Form.Select required type="text" className="form-control" value={addressFrom} onChange={(e) => setAddressFrom(e.target.value)}>
+                                    <Form.Select required type="text" className="form-control" value={addressFrom}
+                                                 onChange={
+                                                            (e) =>
+                                                            {
+                                                                if(e.target.value == "--")
+                                                                    setAddressFrom(null);
+                                                                else
+                                                                    setAddressFrom(e.target.value);
+                                                            }
+                                                          }>
                                         <option>--</option>
                                         <option>Гродно</option>
                                         <option>Минск</option>
@@ -69,7 +84,13 @@ const Supply = observer(() =>
                             <FormGroup as={Col} className="col-4">
                                 <Form.Label column className="form-label">Куда</Form.Label>
                                 <InputGroup style={{width: 170}}>
-                                    <Form.Select required type="text" className="form-control" value={addressTo} onChange={(e) => setAddressTo(e.target.value)}>
+                                    <Form.Select required type="text" className="form-control" value={addressTo} onChange={
+                                        (e) =>
+                                        {
+                                            if(e.target.value == "--")
+                                                setAddressTo(null);
+                                            else
+                                                setAddressTo(e.target.value);}}>
                                         <option>--</option>
                                         <option>Гродно</option>
                                         <option>Минск</option>
@@ -78,13 +99,6 @@ const Supply = observer(() =>
                                         <option>Гомель</option>
                                         <option>Витебск</option>
                                     </Form.Select>
-                                </InputGroup>
-                            </FormGroup>
-
-                            <FormGroup as={Col} className="col-4">
-                                <Form.Label column className="form-label">Дата</Form.Label>
-                                <InputGroup style={{width: 170}}>
-                                    <DatePicker minDate={today} selected={date} onChange={(e) => setDate(e)}/>
                                 </InputGroup>
                             </FormGroup>
                         </Row>
@@ -99,6 +113,10 @@ const Supply = observer(() =>
                         )
                     }
                 </Row>
+
+                <div style={{marginLeft: 590, marginTop:750, position: "absolute"}}>
+                    <PaginationSupply />
+                </div>
             </Card>
         </div>
     );

@@ -6,8 +6,10 @@ export const createSupply = async (supply) =>
     return data;
 }
 
-export const fetchSupply = async () =>
+export const fetchSupply = async (address_from, address_to, date, limit, page) =>
 {
-    const {data} = await $authHost.get('api/supply');
+    const {data} = await $authHost.get('api/supply', {params: {
+            address_from, address_to, date, limit, page
+        }});
     return data;
 }

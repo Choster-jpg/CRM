@@ -43,7 +43,7 @@ export default class SupplyStore
 
         this._page = 1;
         this._totalCount = 0;
-        this._limit = 6;
+        this._limit = 5;
         makeAutoObservable(this);
     }
 }

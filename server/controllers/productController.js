@@ -61,6 +61,7 @@ class productController
             else if (!minPrice && !maxPrice && !name)
             {
                 products = await Product.findAndCountAll({limit, offset, where: {is_deleted : false}});
+                console.log(products);
                 return response.json(products);
             }
 
@@ -118,12 +119,12 @@ class productController
             else
             {
                 if(page == 1)
-                    return response.json({count: result.length, rows: result});
+                {
+                    return response.json({count: result.length, rows: products});
+                }
 
-                return response.json({count: result.length, rows: result});
+                return response.json({count: result.length, rows: products});
             }
-
-
         }
         catch(e)
         {

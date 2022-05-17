@@ -65,7 +65,7 @@ export default class OrderStore
                 {id: 1, user_id: 1, product_id: 8, supply_id: 11, amount: 10235, is_in_process: false},
                 {id: 2, user_id: 1, product_id: 11, supply_id: null, amount: 5, is_in_process: false},
                 {id: 3, user_id: 1, product_id: 9, supply_id: 11, amount: 10, is_in_process: false},
-                {id: 4, user_id: 1, product_id: 10, supply_id: 11, amount: 15, is_in_process: false},
+                {id: 4, user_id: 1, product_id: 10, supply_id: 11, amount: 15, is_in_process: false}
             ];
 
         this._page = 1;

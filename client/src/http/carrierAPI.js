@@ -6,9 +6,9 @@ export const createCarrier = async (carrier) =>
     return data;
 }
 
-export const fetchCarrier = async () =>
+export const fetchCarrier = async (limit, page) =>
 {
-    const {data} = await $authHost.get('api/carrier');
+    const {data} = await $authHost.get('api/carrier', {params: {limit, page}});
     return data;
 }
 

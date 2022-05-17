@@ -4,26 +4,44 @@ import {Context} from "../index";
 import ProductItem from "./ProductItem";
 import {Card, Col, Form, FormGroup, InputGroup, Row} from "react-bootstrap";
 import {fetchProducts, removeProduct} from "../http/productAPI";
+import PaginationProduct from "./PaginationProduct";
 
 
 const Products = observer (() =>
 {
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
-    const [name, setName] = useState('');
+    const [minPrice, setMinPrice] = useState(null);
+    const [maxPrice, setMaxPrice] = useState(null);
+    const [name, setName] = useState(null);
 
     const {product} = useContext(Context);
 
     useEffect(() => {
-        fetchProducts().then(data => product.setProducts(data.rows))
-    }, [])
+        fetchProducts().then(data =>
+        {
+            product.setProducts(data.rows);
+            product.setTotalCount(data.count);
+        });
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchProducts(minPrice, maxPrice, name, product.limit, product.page).then(data =>
+        {
+            product.setProducts(data.rows);
+            product.setTotalCount(data.count);
+        });
+    }, [product.page, maxPrice, minPrice, name])
 
     const onMinPriceChange = (e) =>
     {
         const re = /^[0-9\b]+$/;
         if (e.target.value === '' || re.test(e.target.value))
         {
-            setMinPrice(e.target.value);
+            if(e.target.value == '')
+                setMinPrice(null);
+            else
+                setMinPrice(e.target.value);
         }
     };
 
@@ -32,8 +50,19 @@ const Products = observer (() =>
         const re = /^[0-9\b]+$/;
         if (e.target.value === '' || re.test(e.target.value))
         {
-            setMaxPrice(e.target.value);
+            if(e.target.value == '')
+                setMaxPrice(null);
+            else
+                setMaxPrice(e.target.value);
         }
+    };
+
+    const onNameChange = (e) =>
+    {
+        if(e.target.value == '')
+            setName(null);
+        else
+            setName(e.target.value);
     };
 
     return (
@@ -60,7 +89,7 @@ const Products = observer (() =>
                         <FormGroup as={Col} className="col-2">
                             <Form.Label column className="form-label">Название</Form.Label>
                             <InputGroup className="filter-product-input-sizing">
-                                <Form.Control required type="text" className="form-control" onChange={e => setName(e.target.value)}/>
+                                <Form.Control required type="text" className="form-control" value={name} onChange={onNameChange}/>
                             </InputGroup>
                         </FormGroup>
                     </Row>
@@ -77,6 +106,11 @@ const Products = observer (() =>
                     )
                 }
             </Row>
+
+            <div style={{marginLeft: 1440, marginTop:750, position: "absolute"}}>
+                <PaginationProduct />
+            </div>
+
         </Card>
     );
 });

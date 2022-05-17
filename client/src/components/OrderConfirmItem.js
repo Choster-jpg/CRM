@@ -40,7 +40,7 @@ const OrderConfirmItem = observer(({order}) =>
                                 }
                             </Form.Select>
                         </div>
-                        <div style={{background:"transparent", width: 100, paddingLeft: 20, marginTop: 2}}>
+                        <div style={{background:"transparent", width: 100, paddingLeft: 40, marginTop: 2}}>
                             <Button variant="outline-success" style={{width: 50, height: 30, marginTop: -1}}
                                     className="d-flex justify-content-center align-items-center"
                                     >

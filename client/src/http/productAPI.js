@@ -7,10 +7,14 @@ export const createProduct = async (product) =>
     return data;
 }
 
-export const fetchProducts = async () =>
+export const fetchProducts = async (minPrice, maxPrice, name, limit, page) =>
 {
-    const {data} = await $authHost.get('api/product');
-    return data;
+    const response = await $authHost.get('api/product', {params: {
+            minPrice, maxPrice, name, limit, page
+        }})
+
+    console.log(response);
+    return response.data;
 }
 
 export const removeProduct = async (id) =>
